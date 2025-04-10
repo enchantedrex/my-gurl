@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hi Princess!!</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(135deg, #ffe6f0, #ffc0cb);
+      color: #d63384;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      font-size: 1.2rem;
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      border: none;
+      background-color: #ff69b4;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background-color: #ff85c1;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    textarea {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      padding: 1rem;
+      font-size: 1rem;
+    }
+
+    .corner-decor {
+      position: absolute;
+      font-size: 1.2rem;
+      opacity: 0.7;
+    }
+
+    .corner-top-left { top: 10px; left: 10px; transform: rotate(-10deg); }
+    .corner-top-right { top: 10px; right: 10px; transform: rotate(10deg); }
+    .corner-bottom-left { bottom: 10px; left: 10px; transform: rotate(5deg); }
+    .corner-bottom-right { bottom: 10px; right: 10px; transform: rotate(-5deg); }
+
+    canvas {
+      background-color: #ffe6f0;
+      border: 2px solid #ff69b4;
+      border-radius: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="corner-decor corner-top-left">🌷🌸🌷🌸</div>
+  <div class="corner-decor corner-top-right">∧,,,∧ ( ̳• · • ̳)/ づ♡</div>
+  <div class="corner-decor corner-bottom-left">(\_(\ ( ) ૮/ʚɞ|ა</div>
+  <div class="corner-decor corner-bottom-right">ᘏ⑅︎ᘏ（｡ɞ̴̶̷ ̫ ɞ̴̶̷｡)つ━☆☆*</div>
+
+  <div class="container" id="welcome">
+    <h1>Hi Princess!!</h1>
+    <button onclick="goToMenu()">Click to Enter</button>
+  </div>
+
+  <div class="container hidden" id="menu">
+    <h2>Welcome to your world, sweetie ♥️🌍🧿<br>You are the queen 👸</h2>
+    <div class="menu">
+      <button onclick="goToJournal()">Make Your Journal</button>
+      <button onclick="goToMessage()">Open Message by Me</button>
+      <button onclick="goToGameMenu()">Play Game</button>
+    </div>
+  </div>
+
+  <div class="container hidden" id="journal">
+    <h3>This is your world sweetie ♥️🌍🧿<br>You are the queen 👸</h3>
+    <textarea id="journalEntry" placeholder="You can write anything that you want to say but can’t..."></textarea><br>
+    <button onclick="saveJournal()">Save</button>
+    <button onclick="goToMenu()">Back</button>
+  </div>
+
+  <div class="container hidden" id="message">
+    <h3>Choose your vibe 💌</h3>
+    <div class="menu">
+      <button onclick="showMessage()">Message by Me</button>
+      <button onclick="showPoem()">Poem</button>
+      <button onclick="goToMenu()">Back</button>
+    </div>
+    <div id="messageText" style="margin-top: 1rem; font-size: 1.1rem; line-height: 1.5;"></div>
+  </div>
+
+  <div class="container hidden" id="gameMenu">
+    <h2>Choose Your Game 🎮</h2>
+    <div class="menu">
+      <button onclick="goToDinoLove()">DINO LOVE</button>
+      <button onclick="alert('CATCH ME game will come next!')">CATCH ME</button>
+      <button onclick="goToMenu()">Back</button>
+    </div>
+  </div>
+
+  <div class="container hidden" id="dinoLove">
+    <canvas id="dinoCanvas" width="800" height="300"></canvas>
+    <button onclick="goToGameMenu()">Back</button>
+  </div>
+
+  <script>
+    const welcome = document.getElementById("welcome");
+    const menu = document.getElementById("menu");
+    const journal = document.getElementById("journal");
+    const message = document.getElementById("message");
+    const messageText = document.getElementById("messageText");
+    const gameMenu = document.getElementById("gameMenu");
+    const dinoLove = document.getElementById("dinoLove");
+    const journalEntry = document.getElementById("journalEntry");
+
+    function hideAll() {
+      [welcome, menu, journal, message, gameMenu, dinoLove].forEach(el => el.classList.add("hidden"));
+    }
+    function goToMenu() { hideAll(); menu.classList.remove("hidden"); }
+    function goToJournal() {
+      hideAll(); journal.classList.remove("hidden");
+      journalEntry.value = localStorage.getItem("journal") || "";
+    }
+    function saveJournal() {
+      localStorage.setItem("journal", journalEntry.value);
+      alert("Saved successfully!");
+    }
+    function goToMessage() { hideAll(); message.classList.remove("hidden"); messageText.innerHTML = ""; }
+    function showMessage() {
+      messageText.innerHTML = `I hope you like this bestie and again I'm success to make you feel special I hope 😂😘🫂♥️🧿…<br>Let’s come more closer to each other! I love you ♥️🫂🧿♾️<br><strong>From your cuppycake - 👑 baby girl 👑</strong>`;
+    }
+    function showPoem() {
+      messageText.innerHTML = `💖 You shine like morning dew,<br>Soft and kind, forever true.<br>🌸 When you smile, the stars align,<br>I’m lucky, blessed, forever yours.`;
+    }
+    function goToGameMenu() { hideAll(); gameMenu.classList.remove("hidden"); }
+    function goToDinoLove() {
+      hideAll(); dinoLove.classList.remove("hidden");
+      startDinoGame();
+    }
+
+    // Dino Game Logic
+    function startDinoGame() {
+      const canvas = document.getElementById("dinoCanvas");
+      const ctx = canvas.getContext("2d");
+      let dino = { x: 50, y: 250, w: 30, h: 30, vy: 0, jump: -8, grounded: true };
+      let gravity = 0.5;
+      let traps = [];
+      let hearts = [];
+      let score = 0;
+      let speed = 5;
+      let highScore = 0;
+      let running = true;
+
+      function reset() {
+        dino.y = 250; dino.vy = 0; dino.grounded = true;
+        traps = []; hearts = []; score = 0; speed = 5;
+        running = true; 
+      }
+
+      function drawDino() {
+        ctx.fillStyle = "hotpink";
+        ctx.fillRect(dino.x, dino.y, dino.w, dino.h);
+      }
+
+      function drawTrap(trap) {
+        ctx.fillStyle = "red";
+        ctx.fillRect(trap.x, trap.y, trap.w, trap.h);
+      }
+
+      function drawHeart(heart) {
+        ctx.fillStyle = "deeppink";
+        ctx.beginPath();
+        ctx.arc(heart.x, heart.y, 10, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function update() {
+        if (!running) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        dino.vy += gravity;
+        dino.y += dino.vy;
+        if (dino.y >= 250) { dino.y = 250; dino.vy = 0; dino.grounded = true; }
+        drawDino();
+
+        if (Math.random() < 0.02) traps.push({ x: 800, y: 270, w: 20, h: 30 });
+        traps.forEach(t => {
+          t.x -= speed;
+          drawTrap(t);
+          if (t.x < dino.x + dino.w && t.x + t.w > dino.x && t.y < dino.y + dino.h && t.y + t.h > dino.y) {
+            alert("Game Over! Score: " + score);
+            reset();
+          }
+        });
+        traps = traps.filter(t => t.x > -20);
+
+        if (Math.random() < 0.03) hearts.push({ x: 800, y: Math.random() * 150 + 50 });
+        hearts.forEach(h => {
+          h.x -= speed;
+          drawHeart(h);
+          if (h.x < dino.x + dino.w && h.x > dino.x && h.y > dino.y && h.y < dino.y + dino.h) {
+            score++;
+            hearts = hearts.filter(item => item !== h);
+            if (score % 50 === 0) speed += 1;
+            if (score === 100) alert("Congrats!!! 💖");
+          }
+        });
+
+        ctx.fillStyle = "black";
+        ctx.fillText("Hearts: " + score, 10, 20);
+        requestAnimationFrame(update);
+      }
+
+      document.addEventListener("keydown", e => {
+        if (e.code === "Space" && dino.grounded) {
+          dino.vy = dino.jump;
+          dino.grounded = false;
+        }
+      });
+
+      reset();
+      update();
+    }
+  </script>
+</body>
+</html>
